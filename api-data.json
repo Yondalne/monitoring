@@ -1,0 +1,47 @@
+{
+  "application_name": "G-STOCK",
+  "timestamp": "2024-08-14T12:34:56Z",
+  "metrics": {
+    "user_statistics": {
+      "total_users": 1200,
+      "active_connections": 150,
+      "average_usage_time": "00:35:20",
+      "connection_duration": {
+        "average": "00:45:10",
+        "min": "00:05:00",
+        "max": "01:20:00"
+      },
+      "connection_interval": "00:10:00"
+    },
+    "logs": {
+      "user_activities": [
+        {
+          "user_id": "1234",
+          "action": "created_order",
+          "timestamp": "2024-08-14T12:30:00Z"
+        },
+        {
+          "user_id": "5678",
+          "action": "updated_inventory",
+          "timestamp": "2024-08-14T12:31:45Z"
+        }
+      ],
+      "error_logs": [
+        {
+          "error_code": "500",
+          "error_message": "Internal Server Error",
+          "occurred_at": "2024-08-14T12:32:10Z"
+        },
+        {
+          "error_code": "404",
+          "error_message": "Resource Not Found",
+          "occurred_at": "2024-08-14T12:33:05Z"
+        }
+      ]
+    },
+    "error_rate": {
+      "total_errors": 50,
+      "error_rate_percentage": 0.42
+    }
+  }
+}
