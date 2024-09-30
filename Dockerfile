@@ -35,9 +35,6 @@ RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
 
-RUN php artisan migrate:fresh
-RUN php artisan db:seed
-
 EXPOSE 9000
 
 RUN ls -la /var/www/html
