@@ -22,7 +22,7 @@ WORKDIR /var/www/html
 COPY monitored-app /var/www/html
 
 # Installer les dépendances du projet
-RUN composer install --no-interaction --no-dev --prefer-dist
+RUN composer install
 RUN composer update
 
 # Donner les permissions nécessaires
