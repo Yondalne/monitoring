@@ -23,6 +23,7 @@ COPY monitored-app /var/www/html
 
 # Installer les dépendances du projet
 RUN composer install --no-interaction --no-dev --prefer-dist
+RUN composer update
 
 # Donner les permissions nécessaires
 RUN chown -R www-data:www-data \
