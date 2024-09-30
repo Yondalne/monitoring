@@ -20,7 +20,7 @@ RUN composer --version
 WORKDIR /var/www/html
 
 # Copier les fichiers de l'application
-COPY monitored-app /var/www/html
+COPY ./monitored-app /var/www/html
 
 # Installer les dépendances du projet
 RUN composer install --no-interaction --no-dev --prefer-dist
