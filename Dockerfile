@@ -14,6 +14,7 @@ RUN docker-php-ext-install pdo pdo_mysql zip
 
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN composer --version
 
 # Définir le répertoire de travail
 WORKDIR /var/www/html
@@ -22,7 +23,7 @@ WORKDIR /var/www/html
 COPY monitored-app /var/www/html
 
 # Installer les dépendances du projet
-RUN composer install
+RUN composer install --no-interaction --no-dev --prefer-dist
 RUN composer update
 
 # Donner les permissions nécessaires
@@ -30,6 +31,7 @@ RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
 
+RUN ls
 EXPOSE 9000
 
 CMD ["php-fpm"]
