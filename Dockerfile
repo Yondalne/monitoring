@@ -18,14 +18,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copier uniquement composer.json et composer.lock
-COPY ./monitored-app/composer.json ./monitored-app/composer.lock ./
+# Copier les fichiers de l'application
+COPY ./monitored-app /var/www/html
 
 # Installer les dépendances du projet
-RUN composer install --no-scripts --no-autoloader
-
-# Copier le reste des fichiers de l'application
-COPY ./monitored-app .
+RUN composer install --no-interaction --no-dev --prefer-dist
 
 # Générer l'autoloader optimisé
 RUN composer dump-autoload --optimize
@@ -35,8 +32,14 @@ RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
 
+# Créer le fichier .env si ce n'est pas déjà fait
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
+
+# Générer la clé d'application
+RUN php artisan key:generate --force
+
+# Exposer le port 9000 (pour php-fpm)
 EXPOSE 9000
 
-RUN ls -la /var/www/html
-
+# Le CMD sera fourni par docker-compose pour chaque service
 CMD ["php-fpm"]

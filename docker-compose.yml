@@ -12,7 +12,15 @@ services:
       - ./monitored-app:/var/www/html
     networks:
       - internal
-    command: php artisan serve --host=0.0.0.0 --port=8081
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        composer install
+        php artisan key:generate --force
+        php artisan migrate:fresh
+        php artisan db:seed
+        php artisan serve --host=0.0.0.0 --port=8081  # Ajustez le port pour chaque service
     depends_on:
       db:
         condition: service_healthy
@@ -28,7 +36,13 @@ services:
       - ./monitored-app:/var/www/html
     networks:
       - internal
-    command: php artisan serve --host=0.0.0.0 --port=8000
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        composer install
+        php artisan key:generate --force
+        php artisan serve --host=0.0.0.0 --port=8000  # Ajustez le port pour chaque service
 
   app2:
     build:
@@ -41,7 +55,13 @@ services:
       - ./monitored-app:/var/www/html
     networks:
       - internal
-    command: php artisan serve --host=0.0.0.0 --port=8001
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        composer install
+        php artisan key:generate --force
+        php artisan serve --host=0.0.0.0 --port=8001  # Ajustez le port pour chaque service
 
   db:
     image: mysql:latest
