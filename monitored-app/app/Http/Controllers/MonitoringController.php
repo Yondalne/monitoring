@@ -202,7 +202,7 @@ public function fetchMetrics()
     foreach ($appsData as $appId => $appResponse) {
         $app = Application::find($appId);
         $app_label = strtolower(str_replace(' ', '_', $app->name));
-
+        // dd("hey");
         if ($appResponse['status'] === 'success') {
             $data = $appResponse['data'];
 
