@@ -9,6 +9,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
+      - ~/.composer:/root/.composer  # Ajoutez cette ligne
       - ./monitored-app:/var/www/html
     networks:
       - internal
@@ -34,6 +35,7 @@ services:
       - "8000:8000"
     volumes:
       - ./monitored-app:/var/www/html
+      - ~/.composer:/root/.composer  # Ajoutez cette ligne
     networks:
       - internal
     command: 
@@ -53,6 +55,7 @@ services:
       - "8001:8001"
     volumes:
       - ./monitored-app:/var/www/html
+      - ~/.composer:/root/.composer  # Ajoutez cette ligne
     networks:
       - internal
     command: 
@@ -130,3 +133,4 @@ volumes:
   dbdata:
   prometheus_data:
   grafana-storage:
+  
