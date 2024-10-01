@@ -19,7 +19,7 @@ seed:
 start:
 	$(DOCKER_COMPOSE) up -d
 
-start:
+build:
 	$(DOCKER_COMPOSE) up -d --build
 
 stop:
