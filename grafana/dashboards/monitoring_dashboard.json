@@ -36,11 +36,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "purple",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "light-red",
+                "color": "red",
                 "value": 80
               }
             ]
@@ -99,7 +99,7 @@
           "refId": "A"
         }
       ],
-      "title": "Taux d'utilisation",
+      "title": "Usage Rate",
       "type": "gauge"
     },
     {
@@ -118,7 +118,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "blue",
+                "color": "green",
                 "value": null
               },
               {
@@ -188,7 +188,7 @@
           "useBackend": false
         }
       ],
-      "title": "Nombre de Connexions actives",
+      "title": "Active Connexions",
       "type": "gauge"
     },
     {
@@ -249,38 +249,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "G-Stock"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "orange",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "CRM"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -336,7 +305,7 @@
           "useBackend": false
         }
       ],
-      "title": "Nombre d'utilisateurs total",
+      "title": "Total Users",
       "type": "timeseries"
     },
     {
@@ -425,7 +394,7 @@
           "useBackend": false
         }
       ],
-      "title": "Taux d'erreur",
+      "title": "Error Rate",
       "type": "gauge"
     },
     {
@@ -604,7 +573,7 @@
           "refId": "A"
         }
       ],
-      "title": "Historique des Alertes",
+      "title": "Alerts History",
       "type": "timeseries"
     },
     {
@@ -629,8 +598,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -678,7 +646,7 @@
           "refId": "A"
         }
       ],
-      "title": "GStock Actions Utilisateur",
+      "title": "GStock User Activities",
       "transformations": [
         {
           "id": "organize",
@@ -728,8 +696,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -783,7 +750,7 @@
           "refId": "A"
         }
       ],
-      "title": "CRM Actions Utilisateurs",
+      "title": "CRM User Activities",
       "transformations": [
         {
           "id": "organize",
@@ -815,7 +782,7 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": "5m",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
@@ -823,8 +790,8 @@
       {
         "current": {
           "selected": false,
-          "text": "prometheus",
-          "value": "adz8am3chujnka"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -842,13 +809,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
-    "to": "now"
+    "from": "2024-09-10T04:01:01.815Z",
+    "to": "2024-09-10T04:11:01.815Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Monitoring",
   "uid": "fdxfz71mopwcgc",
-  "version": 24,
+  "version": 9,
   "weekStart": ""
 }
