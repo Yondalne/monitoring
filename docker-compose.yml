@@ -1,71 +1,6 @@
 version: '3.8'
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: api
-    ports:
-      - "8081:8081"
-    volumes:
-      - ~/.composer:/root/.composer  # Ajoutez cette ligne
-      - ./monitored-app:/var/www/html
-    networks:
-      - internal
-    command: 
-      - /bin/sh
-      - -c
-      - |
-        composer install
-        php artisan key:generate --force
-        php artisan migrate:fresh
-        php artisan db:seed
-        php artisan serve --host=0.0.0.0 --port=8081  # Ajustez le port pour chaque service
-    depends_on:
-      db:
-        condition: service_healthy
-
-  app1:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: app1
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./monitored-app:/var/www/html
-      - ~/.composer:/root/.composer  # Ajoutez cette ligne
-    networks:
-      - internal
-    command: 
-      - /bin/sh
-      - -c
-      - |
-        composer install
-        php artisan key:generate --force
-        php artisan serve --host=0.0.0.0 --port=8000  # Ajustez le port pour chaque service
-
-  app2:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: app2
-    ports:
-      - "8001:8001"
-    volumes:
-      - ./monitored-app:/var/www/html
-      - ~/.composer:/root/.composer  # Ajoutez cette ligne
-    networks:
-      - internal
-    command: 
-      - /bin/sh
-      - -c
-      - |
-        composer install
-        php artisan key:generate --force
-        php artisan serve --host=0.0.0.0 --port=8001  # Ajustez le port pour chaque service
-
   db:
     image: mysql:latest
     ports:
@@ -83,13 +18,89 @@ services:
       timeout: 5s
       retries: 5
     restart: on-failure:5
-  
-  # phpmyadmin:
-  #   image: phpmyadmin:latest
-  #   ports: 
-  #     - 9001:80
-  #   environment:
-  #     - PMA_ARBITRARY=1
+
+  app1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app1
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./monitored-app:/var/www/html
+      - ~/.composer:/root/.composer
+    networks:
+      - internal
+    depends_on:
+      db:
+        condition: service_healthy
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        php artisan key:generate --force
+        php artisan serve --host=0.0.0.0 --port=8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  app2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app2
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./monitored-app:/var/www/html
+      - ~/.composer:/root/.composer
+    networks:
+      - internal
+    depends_on:
+      app1:
+        condition: service_healthy
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        php artisan key:generate --force
+        php artisan serve --host=0.0.0.0 --port=8001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8081:8081"
+    volumes:
+      - ~/.composer:/root/.composer
+      - ./monitored-app:/var/www/html
+    networks:
+      - internal
+    depends_on:
+      app2:
+        condition: service_healthy
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        php artisan key:generate --force
+        php artisan migrate:fresh
+        php artisan db:seed
+        php artisan serve --host=0.0.0.0 --port=8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   prometheus:
     image: prom/prometheus
@@ -106,10 +117,12 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     networks:
       - internal
+    depends_on:
+      api:
+        condition: service_healthy
 
   grafana:
     image: grafana/grafana
-    # container_name: grafana
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -133,4 +146,3 @@ volumes:
   dbdata:
   prometheus_data:
   grafana-storage:
-  

@@ -102,8 +102,7 @@ class MonitoringController extends Controller
         $user_logs_metrics .= "
 # HELP {$app_label}_user_action_{$log['action']} Compte des actions utilisateurs pour {$log['action']}
 # TYPE {$app_label}_user_action_{$log['action']} counter
-{$app_label}_user_action_{$log['action']}{user_id=\"{$log['user_id']}\", action=\"{$log['action']}\"} 1
-        ";
+{$app_label}_user_action_{$log['action']}{user_id=\"{$log['user_id']}\", action=\"{$log['action']}\"} 1";
     }
 
     // Initialiser les logs d'erreurs sous forme de compteurs
@@ -113,8 +112,7 @@ class MonitoringController extends Controller
         $error_logs_metrics .= "
 # HELP {$app_label}_error_{$error['error_code']} Nombre d'occurrences de l'erreur {$error['error_code']}
 # TYPE {$app_label}_error_{$error['error_code']} counter
-{$app_label}_error_{$error['error_code']}{error_message=\"{$error['error_message']}\", occurred_at=\"{$error['occurred_at']}\"} 1
-        ";
+{$app_label}_error_{$error['error_code']}{error_message=\"{$error['error_message']}\", occurred_at=\"{$error['occurred_at']}\"} 1";
     }
 
     // Formater les autres métriques pour Prometheus
@@ -141,8 +139,7 @@ class MonitoringController extends Controller
 
 # HELP {$app_label}_error_rate_percentage Taux d'erreur en pourcentage pour {$data['application_name']}
 # TYPE {$app_label}_error_rate_percentage gauge
-{$app_label}_error_rate_percentage{application=\"{$data['application_name']}\"} {$data['metrics']['error_rate']['error_rate_percentage']}
-    ";
+{$app_label}_error_rate_percentage{application=\"{$data['application_name']}\"} {$data['metrics']['error_rate']['error_rate_percentage']}";
 
     // Ajouter les logs utilisateurs et logs d'erreurs au format Prometheus
     $formattedMetrics .= $user_logs_metrics . $error_logs_metrics;
@@ -249,8 +246,7 @@ private function formatAppMetrics($app_label, $data)
 
 # HELP {$app_label}_error_rate_percentage Taux d'erreur en pourcentage
 # TYPE {$app_label}_error_rate_percentage gauge
-{$app_label}_error_rate_percentage{application=\"{$data['application_name']}\"} {$data['metrics']['error_rate']['error_rate_percentage']}
-    ";
+{$app_label}_error_rate_percentage{application=\"{$data['application_name']}\"} {$data['metrics']['error_rate']['error_rate_percentage']}";
 
     // Ajouter les logs utilisateurs et logs d'erreurs
     $formattedMetrics .= $this->formatUserLogs($app_label, $data['metrics']['logs']['user_activities']);
@@ -270,8 +266,7 @@ private function formatUserLogs($app_label, $userActivities)
         $metrics .= "
 # HELP {$app_label}_user_action_{$log['action']} Compte des actions utilisateurs pour {$log['action']}
 # TYPE {$app_label}_user_action_{$log['action']} counter
-{$app_label}_user_action_{$log['action']}{user_id=\"{$log['user_id']}\", action=\"{$log['action']}\"} 1
-        ";
+{$app_label}_user_action_{$log['action']}{user_id=\"{$log['user_id']}\", action=\"{$log['action']}\"} 1";
     }
     return $metrics;
 }
@@ -283,8 +278,7 @@ private function formatErrorLogs($app_label, $errorLogs)
         $metrics .= "
 # HELP {$app_label}_error_{$error['error_code']} Nombre d'occurrences de l'erreur {$error['error_code']}
 # TYPE {$app_label}_error_{$error['error_code']} counter
-{$app_label}_error_{$error['error_code']}{error_message=\"{$error['error_message']}\", occurred_at=\"{$error['occurred_at']}\"} 1
-        ";
+{$app_label}_error_{$error['error_code']}{error_message=\"{$error['error_message']}\", occurred_at=\"{$error['occurred_at']}\"} 1";
     }
     return $metrics;
 }
