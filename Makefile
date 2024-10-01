@@ -19,6 +19,9 @@ seed:
 start:
 	$(DOCKER_COMPOSE) up -d
 
+start:
+	$(DOCKER_COMPOSE) up -d --build
+
 stop:
 	$(DOCKER_COMPOSE) down
 
