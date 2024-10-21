@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MonitoringController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,11 @@ Route::get('/', function () {
 
 Route::get('/metrics', [MonitoringController::class, 'fetchMetrics']);
 
+
+Auth::routes();
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    // Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::resource('applications', ApplicationController::class)->names('admin.applications');
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -210,8 +210,7 @@ public function fetchMetrics()
             $metrics = "
 # HELP {$app_label}_api_error Indique une erreur lors de l'appel à l'API de {$app->name}
 # TYPE {$app_label}_api_error gauge
-{$app_label}_api_error{application=\"{$app->name}\", error=\"{$appResponse['message']}\"} 1
-            ";
+{$app_label}_api_error{application=\"{$app->name}\", error=\"{$appResponse['message']}\"} 1";
         }
 
         $allMetrics .= $metrics;
